@@ -52,7 +52,7 @@ export default function Dashboard() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:4000/movies", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 401 || res.status === 403) {
@@ -89,7 +89,7 @@ export default function Dashboard() {
         notes,
         posterUrl,
       };
-      const res = await fetch("http://localhost:4000/movies", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(movie),
@@ -122,7 +122,7 @@ export default function Dashboard() {
     if (!window.confirm("Are you sure you want to delete this movie?")) return;
     setDeletingId(id);
     try {
-      const res = await fetch(`http://localhost:4000/movies/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -167,7 +167,7 @@ export default function Dashboard() {
         tags: editFields.tags ? editFields.tags.split(",").map((t: string) => t.trim()).filter(Boolean) : [],
         actors: editFields.actors.split(",").map((a: string) => a.trim()).filter(Boolean),
       };
-      const res = await fetch(`http://localhost:4000/movies/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(updated),
